@@ -1,0 +1,28 @@
+Arto's Brainfuck Interpreter
+Copyright (c) 2011 Arto Jonsson <artoj@iki.fi>
+
+ABOUT
+
+   Arto's Brainfuck Interpretor or Abi is a simple interpreter for the
+   brainfuck programming language. It was created for learning the Lua
+   language. The interpreter uses Lua's metatable system to allow arbitrary
+   large memory space.
+
+   More information about brainfuck: http://en.wikipedia.org/Brainfuck
+
+USAGE
+
+   The interpreter supports only two functions:
+
+       new() -- create an interpreter instance
+       do_string(s) -- interpret brainfuck code in string 's'
+
+   Reading and writing is done using Lua's standard 'io:write' and 'io:read'
+   functions.
+
+   Hello World example:
+
+        require 'abi'
+
+        abi = Abi:new()
+        abi:do_string("++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.")
