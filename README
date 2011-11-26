@@ -8,7 +8,7 @@ ABOUT
    language. The interpreter uses Lua's metatable system to allow arbitrary
    large memory space.
 
-   More information about brainfuck: http://en.wikipedia.org/Brainfuck
+   More information about brainfuck: http://en.wikipedia.org/wiki/Brainfuck
 
 USAGE
 
