@@ -33,14 +33,12 @@ function Abi:new()
 	})
 
 	abi.cells = cells
+	abi.dp = 1
 
 	return abi
 end
 
 function Abi:do_string(s)
-
-	-- Data pointer
-	local dp = 1
 
 	-- Instruction pointer
 	local ip = 1
@@ -49,19 +47,19 @@ function Abi:do_string(s)
 		local op = s:sub(ip, ip)
 
 		if op == ">" then
-			dp = dp + 1
+			self.dp = self.dp + 1
 		elseif op == "<" then
-			dp = dp - 1
+			self.dp = self.dp - 1
 		elseif op == "+" then
-			self.cells[dp] = self.cells[dp] + 1
+			self.cells[self.dp] = self.cells[self.dp] + 1
 		elseif op == "-" then
-			self.cells[dp] = self.cells[dp] - 1
+			self.cells[self.dp] = self.cells[self.dp] - 1
 		elseif op == "." then
-			io.write(string.format('%c', self.cells[dp]))
+			io.write(string.format('%c', self.cells[self.dp]))
 		elseif op == "," then
-			self.cells[dp] = io.read(1):byte()
+			self.cells[self.dp] = io.read(1):byte()
 		elseif op == "[" then
-			if self.cells[dp] == 0 then
+			if self.cells[self.dp] == 0 then
 				ip = ip + 1
 
 				-- Find the next "]" and jump over it
@@ -72,7 +70,7 @@ function Abi:do_string(s)
 				end
 			end
 		elseif op == "]" then
-			if self.cells[dp] ~= 0 then
+			if self.cells[self.dp] ~= 0 then
 				ip = ip - 1
 
 				-- Find the previous "[" and use the instruction
