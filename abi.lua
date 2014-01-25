@@ -1,5 +1,5 @@
 --[[
-Copyright (c) 2011 Arto Jonsson <artoj@iki.fi>
+Copyright (c) 2011, 2014 Arto Jonsson <artoj@iki.fi>
 
 Permission to use, copy, modify, and distribute this software for any
 purpose with or without fee is hereby granted, provided that the above
@@ -62,23 +62,45 @@ function Abi:do_string(s)
 			if self.cells[self.dp] == 0 then
 				ip = ip + 1
 
-				-- Find the next "]" and jump over it
-				local s1 = s:sub(ip, ip)
-				while s1 ~= "]" do
+				-- Find the next matching "]" and jump over it
+				local s1
+				local depth = 0
+				while true do
 					ip = ip + 1
 					s1 = s:sub(ip, ip)
+
+					if s1 == "[" then
+						depth = depth + 1
+					elseif s1 == "]" then
+						if depth == 0 then
+							break
+						else
+							depth = depth - 1
+						end
+					end
 				end
 			end
 		elseif op == "]" then
 			if self.cells[self.dp] ~= 0 then
 				ip = ip - 1
 
-				-- Find the previous "[" and use the instruction
+				-- Find the previous matching "[" and use the instruction
 				-- after it
-				local s1 = s:sub(ip, ip)
-				while s1 ~= "[" do
+				local s1
+				local depth = 0
+				while true do
 					ip = ip - 1
 					s1 = s:sub(ip, ip)
+
+					if s1 == "]" then
+						depth = depth + 1
+					elseif s1 == "[" then
+						if depth == 0 then
+							break
+						else
+							depth = depth - 1
+						end
+					end
 				end
 			end
 		end
